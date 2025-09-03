@@ -24,7 +24,77 @@
     <title>English Janala</title>
   </head>
   <body>
-    <h1 class="text-8xl">English Janala is cooking</h1>
+    <header class="bg-sky-50 shadow-sm">
+      <div class="mx-auto w-11/12 navbar">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div
+              title="button"
+              tabindex="0"
+              role="button"
+              class="lg:hidden btn btn-ghost"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="z-1 bg-base-100 shadow mt-3 p-2 rounded-box w-52 menu menu-sm dropdown-content"
+            >
+              <li>
+                <a> <i class="fa-solid fa-circle-question"></i> FAQ</a>
+              </li>
+              <li>
+                <a> <i class="fa-solid fa-book-open"></i> Learn</a>
+              </li>
+            </ul>
+          </div>
+          <div class="flex flex-row items-center gap-1 hover:cursor-pointer">
+            <span class="font-bold text-xl">English</span>
+            <span><img src="./assets/logo.png" alt="window icon" /></span>
+            <span class="font-bangla font-semibold text-xl">জানালা</span>
+          </div>
+        </div>
+        <div class="hidden lg:flex md:navbar-end">
+          <ul class="space-x-5 px-1 menu menu-horizontal">
+            <li>
+              <a class="btn-outline btn btn-primary">
+                <i class="fa-solid fa-circle-question"></i> FAQ</a
+              >
+            </li>
+            <li>
+              <a class="btn-outline btn btn-primary">
+                <i class="fa-solid fa-book-open"></i> Learn</a
+              >
+            </li>
+            <li>
+              <a class="btn-outline btn btn-secondary">
+                <i class="fa-right-from-bracket fa-solid"></i> Logout</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="lg:hidden navbar-end">
+          <a class="btn btn-secondary">
+            <i class="fa-right-from-bracket fa-solid"></i> Logout</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <section class="hero"></section>
     <!-- link to javascript -->
     <script src="./index.js"></script>
   </body>
