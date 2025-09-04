@@ -80,12 +80,12 @@ async function displayWord(id) {
       <h2 class='font-bold text-3xl card-title'>${word}</h2>
       <p class='text-xl'>Meaning / Pronunciation</p>
       <p class='font-semibold text-2xl font-bangla'>${
-        meaning === null ? "কোন তথ্য পাওয়া যায় নি" : meaning
+        meaning ? meaning : "শব্দ পাওয়া যায় নি"
       } / ${pronunciation}</p>
       <div class='flex flex-row justify-between w-full card-actions'>
         <button
           title='Information'
-          class='bg-sky-50 hover:bg-inherit rounded-md btn btn-ghost'
+          class='bg-sky-50 hover:bg-inherit rounded-md btn h-8 w-8'
           onClick="info(${id})"
         >
           <i class='fa-solid fa-circle-info'></i>
@@ -93,9 +93,9 @@ async function displayWord(id) {
         <button
         onclick="speakText('${word}')"
           title='Pronunciation'
-          class='bg-sky-50 hover:bg-inherit rounded-md btn btn-ghost'
+          class='bg-sky-50 hover:bg-inherit rounded-md  h-8 w-8'
         >
-          <i class='fa-solid fa-volume-high'></i>
+          <img class="h-full w-full p-1 hover:cursor-pointer" src="./assets/speaking.png" alt="speaking icon" />
         </button>
       </div>
     </div>
