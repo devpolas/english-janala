@@ -91,6 +91,7 @@ async function displayWord(id) {
           <i class='fa-solid fa-circle-info'></i>
         </button>
         <button
+        onclick="speakText('${word}')"
           title='Pronunciation'
           class='bg-sky-50 hover:bg-inherit rounded-md btn btn-ghost'
         >
@@ -141,4 +142,14 @@ async function info(id) {
 </button>`;
 
   modal.showModal();
+}
+
+function speakText(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+  } else {
+    console.warn("Text to Speech not supported!");
+  }
 }
