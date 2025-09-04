@@ -8,6 +8,16 @@ async function fetchData(ref, id) {
   return content;
 }
 
+function createHtmlElement(array) {
+  if (!Array.isArray(array)) {
+    return `<span class="text-red-500">Something went wrong!</span>`;
+  }
+  const elements = array.map(
+    (el) => `<p class="bg-sky-50 p-2 text-xl">${el}</p>`
+  );
+  return elements.join(" ");
+}
+
 async function displayLesson() {
   // select a div from document and set the innerHtml empty
   const lessons = document.getElementById("lessons");
@@ -46,7 +56,6 @@ async function displayWord(id) {
   lessons.innerHTML = "";
   // call the fetch function
   const { data } = await fetchData("level", id);
-  console.log(data);
   // when error or fail to load data
   if (data.length === 0) {
     const errorDiv = document.createElement("div");
@@ -61,7 +70,7 @@ async function displayWord(id) {
   }
 
   for (const element of data) {
-    const { word, meaning, pronunciation } = element;
+    const { id, word, meaning, pronunciation } = element;
     const everyWord = document.createElement("div");
     everyWord.innerHTML = `<div class='bg-white text-black card'>
     <div class='items-center text-center card-body'>
@@ -72,6 +81,7 @@ async function displayWord(id) {
         <button
           title='Information'
           class='bg-sky-50 hover:bg-inherit rounded-md btn btn-ghost'
+          onClick="info(${id})"
         >
           <i class='fa-solid fa-circle-info'></i>
         </button>
@@ -87,4 +97,43 @@ async function displayWord(id) {
     // append child
     lessons.appendChild(everyWord);
   }
+}
+
+async function info(id) {
+  const modal = document.getElementById("modal");
+  const modalContent = document.getElementById("modal-content");
+  modalContent.innerHTML = "";
+
+  const { data } = await fetchData("word", id);
+  const { word, meaning, pronunciation, sentence, synonyms } = data;
+
+  modalContent.innerHTML = `<div class="flex flex-col gap-8 p-4 border-2 border-sky-100 rounded-md">
+  <h1 class="font-semibold text-4xl">
+    ${word} (<i class="fa-solid fa-microphone-lines"></i> : ${pronunciation})
+  </h1>
+  <div class="flex flex-col gap-2.5">
+    <h3 class="font-semibold text-2xl">Meaning</h3>
+    <p class="font-bangla font-medium text-2xl">${meaning}</p>
+  </div>
+  <div class="flex flex-col gap-2.5">
+    <h3 class="font-semibold text-2xl">Example</h3>
+    <p class="text-2xl">${sentence}.</p>
+  </div>
+  <div class="flex flex-col gap-2.5">
+    <h3 class="font-bangla font-semibold text-2xl">
+      সমার্থক শব্দ গুলো
+    </h3>
+    <div class="flex flex-row flex-wrap gap-2.5">
+     ${createHtmlElement(synonyms)}
+    </div>
+  </div>
+</div>
+<button
+  onclick="modal.close()"
+  class="mt-8 rounded-md w-full md:w-1/2 text-xl btn btn-primary"
+>
+  Complete Learning
+</button>`;
+
+  modal.showModal();
 }
