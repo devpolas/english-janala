@@ -79,7 +79,9 @@ async function displayWord(id) {
     <div class='items-center text-center card-body'>
       <h2 class='font-bold text-3xl card-title'>${word}</h2>
       <p class='text-xl'>Meaning / Pronunciation</p>
-      <p class='font-semibold text-2xl font-bangla'>${meaning} / ${pronunciation}</p>
+      <p class='font-semibold text-2xl font-bangla'>${
+        meaning === null ? "কোন তথ্য পাওয়া যায় নি" : meaning
+      } / ${pronunciation}</p>
       <div class='flex flex-row justify-between w-full card-actions'>
         <button
           title='Information'
