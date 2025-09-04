@@ -5,7 +5,7 @@ async function fetchData(ref, id) {
     throw new Error("Fail to fetch data!");
   }
   const content = await request.json();
-  return content;
+  return await content;
 }
 
 function createHtmlElement(array) {
@@ -25,7 +25,7 @@ async function displayLesson() {
   // call the fetch function
   const { data } = await fetchData("levels", "all");
   // when error or fail to load data
-  if (data.length === 0) {
+  if ((await data.length) === 0) {
     const errorDiv = document.createElement("div");
     errorDiv.innerHTML = `<div role="alert" class="alert alert-error">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ async function displayLesson() {
     lessons.appendChild(errorDiv);
   }
 
-  for (const lesson of data) {
+  for (const lesson of await data) {
     const everyLesson = document.createElement("div");
     everyLesson.innerHTML = `<button onClick="displayWord(${lesson.level_no})" class="btn-outline btn btn-primary">
     <i class="fa-solid fa-book-open"></i>
@@ -59,11 +59,14 @@ async function displayWord(id) {
   // when error or fail to load data
   if (data.length === 0) {
     const errorDiv = document.createElement("div");
-    errorDiv.innerHTML = `<div role="alert" class="alert alert-error">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span>Error! Fail to fetch data from server!</span>
+    errorDiv.innerHTML = `<div
+    class="top-1/2 left-1/2 absolute bg-gray-50 mx-auto mt-14 p-15 w-full text-center translate-x-[-50%] translate-y-[-50%]""
+  >
+  <i class="fa-solid fa-triangle-exclamation text-4xl text-gray-400"></i>
+    <p class="text-gray-500 text-sm">
+    এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।
+    </p>
+    <h3 class="font-medium text-3xl">নেক্সট Lesson এ যান</h3>
   </div>`;
     // append child
     lessons.appendChild(errorDiv);
