@@ -8,6 +8,16 @@ async function fetchData(ref, id) {
   return await content;
 }
 
+function speakText(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    window.speechSynthesis.speak(utterance);
+  } else {
+    console.warn("Text to Speech not supported!");
+  }
+}
+
 function createHtmlElement(array) {
   if (!Array.isArray(array)) {
     return `<span class="text-red-500">Something went wrong!</span>`;
@@ -35,11 +45,12 @@ async function displayLesson() {
   </div>`;
     // append child
     lessons.appendChild(errorDiv);
+    return;
   }
 
   for (const lesson of await data) {
     const everyLesson = document.createElement("div");
-    everyLesson.innerHTML = `<button onClick="displayWord(${lesson.level_no})" class="btn-outline btn btn-primary">
+    everyLesson.innerHTML = `<button id="lesson-btn-${lesson.level_no}" onClick="displayWord(${lesson.level_no})" class="lesson-btn btn-outline btn btn-primary">
     <i class="fa-solid fa-book-open"></i>
     lesson - ${lesson.level_no}
     </button>`;
@@ -70,6 +81,7 @@ async function displayWord(id) {
   </div>`;
     // append child
     lessons.appendChild(errorDiv);
+    return;
   }
 
   for (const element of data) {
@@ -81,7 +93,7 @@ async function displayWord(id) {
       <p class='text-xl'>Meaning / Pronunciation</p>
       <p class='font-semibold text-2xl font-bangla'>${
         meaning ? meaning : "শব্দ পাওয়া যায় নি"
-      } / ${pronunciation}</p>
+      } / ${pronunciation ? pronunciation : "Pronounciation পাওয়া  যায়নি"}</p>
       <div class='flex flex-row justify-between w-full card-actions'>
         <button
           title='Information'
@@ -144,12 +156,6 @@ async function info(id) {
   modal.showModal();
 }
 
-function speakText(text) {
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US";
-    window.speechSynthesis.speak(utterance);
-  } else {
-    console.warn("Text to Speech not supported!");
-  }
-}
+// document.getElementById("lessons").addEventListener("click", function (e) {
+//   console.log(e.target);
+// });
